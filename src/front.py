@@ -37,7 +37,7 @@ def main():
     most_recent, number = get_most_recent_file('./data/', f'{st.session_state.name}_ciclo')
 
     if most_recent != None:
-        st.session_state.df = pd.read_excel(most_recent, engine = 'openpyxl')
+        st.session_state.df = pd.read_excel(most_recent)
     else:
         st.warning("Oops! It seems you haven't register any cycle, please add one with the menu on the left")
         st.stop()
