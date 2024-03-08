@@ -4,7 +4,7 @@ import yaml
 from yaml.loader import SafeLoader
 import pandas as pd
 from utils.data_mangement import get_most_recent_file
-from utils.sinthotermic import find_sintho
+from utils.sinthotermic import find_sintho, find_phase, dict_phases
 from utils.plots import plot_sintho
 import datetime
 
@@ -29,7 +29,7 @@ def main():
             #     st.checkbox('Illness')
             # with col3:
             #     st.checkbox('Different time')
-            flux = st.selectbox('Flux', ['','F', 'f'])
+            flux = st.selectbox('Flux', ['','F', 'f', 'S'])
             # cuello1 = st.selectbox('Cervix opening', ['Open', 'Halfway', 'Closed'])
             # cuello2 = st.selectbox('Cervix height', ['Up', 'Halfway', 'Down'])
             # cuello3 = st.selectbox('Cervix touch', ['Soft', 'Hard'])
@@ -71,6 +71,13 @@ def main():
 
     # after loading today's data, show graph
     chart = plot_sintho(st.session_state.df)
+
+    current_phase = st.session_state.df['phase'].iloc[-1]
+    st.info(f'You are currently {dict_phases[current_phase]}')
+
+    if current_phase == 'luteal':
+        st.success("Unprotected sex won't lead to a pregnancy")
+
 
     tab1, tab2 = st.tabs(["Graph", "Table"])
 

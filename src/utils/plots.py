@@ -3,7 +3,7 @@ import pandas as pd
 
 def plot_sintho(df):
     df['Fecha'] = pd.to_datetime(df['Fecha']).dt.date
-
+    df['Fecha2'] = df['Fecha'].shift(1)
     # Plot
     line = alt.Chart(df).mark_line().encode(
         x='Fecha:T',
@@ -19,7 +19,7 @@ def plot_sintho(df):
     if df['baseline'].iloc[-1]!=40:
         baseline = alt.Chart(df).mark_line().encode(
             x='Fecha:T',
-            y=alt.Y('baseline:Q', scale=alt.Scale(domain=[36, 37]))
+            y=alt.Y('baseline:Q', scale=alt.Scale(domain=[35.9, 37]))
         )
     else:
         baseline = alt.Chart(pd.DataFrame({'y':[36]})
@@ -31,19 +31,23 @@ def plot_sintho(df):
         tooltip=['Fecha:T', 'ovulation_confirmed']
     )
 
-    light_blue_band = alt.Chart(df[df['Flujo'] == 'f']).mark_point(color='orange', filled = True, size = 100).encode(
+    light_blue_band = alt.Chart(df[df['Flujo'] == 'f']).mark_rect(color='lightblue', opacity = 0.3).encode(
         x='Fecha:T',
-        y='Temperatura:Q',
-        tooltip=['Fecha:T', 'Flujo']
+        x2='Fecha2:T'
     )
 
-    dark_blue_band = alt.Chart(df[df['Flujo'] == 'F']).mark_point(color='red', filled = True, size = 100).encode(
+    dark_blue_band = alt.Chart(df[df['Flujo'] == 'F']).mark_rect(color='darkblue', opacity = 0.3).encode(
         x='Fecha:T',
-        y='Temperatura:Q',
-        tooltip=['Fecha:T', 'Flujo']
+        x2='Fecha2:T'
     )
 
-    chart = (line + points + baseline + points_ovulation + light_blue_band + dark_blue_band ).properties(
+    red_band = alt.Chart(df[df['Flujo'] == 'S']).mark_rect(color='red', opacity = 0.3).encode(
+        x='Fecha:T',
+        x2='Fecha2:T'
+    )
+
+
+    chart = (red_band + light_blue_band + dark_blue_band + line + points + baseline + points_ovulation ).properties(
         title='Temperatura vs Fecha',
         width=600,
         height=300

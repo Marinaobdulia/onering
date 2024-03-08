@@ -58,6 +58,21 @@ def confirm_ovulation_flux(df):# Find last 'F' index
         df.loc[first_occurrence_ovulation::, 'ovulation_confirmed_flux'] = True
     return df
 
+def find_phase(last_day):
+    if last_day.Flujo == 'S':
+        current_phase = 'period'
+    elif last_day.higher_baseline == False and last_day.ovulation_confirmed == True:
+        current_phase = 'period'
+    elif last_day.Flujo == 'f' or last_day.Flujo == 'F' or last_day.higher_baseline == False:
+        current_phase = 'follicular'
+    elif last_day.higher_baseline == True and last_day.ovulation_confirmed == False:
+        current_phase = 'ovulating'
+    elif last_day.ovulation_confirmed == True:
+        current_phase = 'luteal'
+    else:
+        current_phase = 'undefined'
+    return current_phase
+
 def find_sintho(df, dec_above=0.1):
     df = confirm_ovulation_temp(df, dec_above)
 
@@ -65,4 +80,12 @@ def find_sintho(df, dec_above=0.1):
 
     df['ovulation_confirmed'] = (df.ovulation_confirmed_temp & df.ovulation_confirmed_flux)
 
+    df['phase'] = df.apply(find_phase, axis=1)
+
     return df
+
+dict_phases = {'period': 'on your period',
+               'follicular': 'on the follicular phase',
+               'ovulating': 'ovulating or have just ovulated',
+               'luteal': 'on the luteal phase',
+               'undefined': 'on an undefined phase, please add more data'}
