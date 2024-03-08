@@ -57,8 +57,15 @@ def main():
 
         
     st.subheader('Your current cycle')
+
+    strict = st.checkbox('Strict Algorithm')
+
+    if strict:
+        dec_above = 0.2
+    else:
+        dec_above = 0.1
     
-    st.session_state.df = find_sintho(st.session_state.df)
+    st.session_state.df = find_sintho(st.session_state.df, dec_above)
 
     # after loading today's data, show graph
     chart = plot_sintho(st.session_state.df)
@@ -66,7 +73,7 @@ def main():
     tab1, tab2 = st.tabs(["Graph", "Table"])
 
     with tab1:
-        st.altair_chart(chart)
+        st.altair_chart(chart, use_container_width=True)
     with tab2:
         st.write(st.session_state.df)
 
