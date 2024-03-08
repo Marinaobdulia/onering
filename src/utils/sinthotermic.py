@@ -21,24 +21,48 @@ def find_baseline(df):
 
     return df
 
-def confirm_ovulation(df, dec_above=0.2):
+def confirm_ovulation_temp(df, dec_above):
+    df = find_baseline(df)
     # Check the next three temperatures are higher than that value
     df['higher_baseline']=df.apply(lambda x: ((x.Temperatura >= x.baseline+dec_above)), axis=1)
 
     df['days_higher_than_baseline'] = df['higher_baseline'].rolling(window=4, min_periods = 1).sum()
 
     # confirm ovulation
-    df['ovulation_confirmed'] = False
-    mask_ovulation = ((df.ovulation_confirmed == False) & (df.days_higher_than_baseline==3))
+    df['ovulation_confirmed_temp'] = False
+    mask_ovulation = ((df.ovulation_confirmed_temp == False) & (df.days_higher_than_baseline==3))
     first_occurrence_ovulation = mask_ovulation.idxmax()
    
     if first_occurrence_ovulation>0:
-        df.loc[first_occurrence_ovulation::, 'ovulation_confirmed'] = True    
+        df.loc[first_occurrence_ovulation::, 'ovulation_confirmed_temp'] = True    
     return df
 
-def find_sintho(df):
-    df = find_baseline(df)
+def confirm_ovulation_flux(df):# Find last 'F' index
+    last_F_index = df[df['Flujo'] == 'F'].index.max()
 
-    df = confirm_ovulation(df)
+    # Create 'last_F' column
+    df['last_F'] = 0
+    if last_F_index>0:
+        df.loc[last_F_index::, 'last_F'] = 1
+
+    # Fill forward the last 'F' value
+    df['last_F'] = df['last_F'].ffill().astype(int)
+    df['days_from_F'] = df['last_F'].rolling(window=3, min_periods = 1).sum()
+
+    # confirm ovulation
+    df['ovulation_confirmed_flux'] = False
+    mask_ovulation = ((df.ovulation_confirmed_flux == False) & (df.days_from_F==3))
+    first_occurrence_ovulation = mask_ovulation.idxmax()
+
+    if first_occurrence_ovulation>0:
+        df.loc[first_occurrence_ovulation::, 'ovulation_confirmed_flux'] = True
+    return df
+
+def find_sintho(df, dec_above=0.1):
+    df = confirm_ovulation_temp(df, dec_above)
+
+    df = confirm_ovulation_flux(df)
+
+    df['ovulation_confirmed'] = (df.ovulation_confirmed_temp & df.ovulation_confirmed_flux)
 
     return df

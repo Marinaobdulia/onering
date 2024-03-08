@@ -25,13 +25,25 @@ def plot_sintho(df):
         baseline = alt.Chart(pd.DataFrame({'y':[36]})
                              ).mark_line().encode(y='y')
 
-    points_ovulation = alt.Chart(df[df['ovulation_confirmed']]).mark_point(color='green').encode(
+    points_ovulation = alt.Chart(df[df['ovulation_confirmed']]).mark_point(color='green', filled = True, size = 100).encode(
         x='Fecha:T',
         y='Temperatura:Q',
         tooltip=['Fecha:T', 'ovulation_confirmed']
     )
 
-    chart = (line + points+baseline+points_ovulation).properties(
+    light_blue_band = alt.Chart(df[df['Flujo'] == 'f']).mark_point(color='orange', filled = True, size = 100).encode(
+        x='Fecha:T',
+        y='Temperatura:Q',
+        tooltip=['Fecha:T', 'Flujo']
+    )
+
+    dark_blue_band = alt.Chart(df[df['Flujo'] == 'F']).mark_point(color='red', filled = True, size = 100).encode(
+        x='Fecha:T',
+        y='Temperatura:Q',
+        tooltip=['Fecha:T', 'Flujo']
+    )
+
+    chart = (line + points + baseline + points_ovulation + light_blue_band + dark_blue_band ).properties(
         title='Temperatura vs Fecha',
         width=600,
         height=300

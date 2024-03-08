@@ -7,6 +7,6 @@ credentials:
       name: test1
       password: $2b$12$dk4odyG5RaskzWjPu8tTM.jtyEhzWa6ebWb49E5YIAm0hyhzpGPNq
 cookie:
-  expiry_days: 0
+  expiry_days: 30
   key: random_signature_key # Must be string
   name: random_cookie_name
