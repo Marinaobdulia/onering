@@ -29,7 +29,7 @@ def main():
             #     st.checkbox('Illness')
             # with col3:
             #     st.checkbox('Different time')
-            # flux = st.selectbox('Flux', ['F', 'f'])
+            flux = st.selectbox('Flux', ['F', 'f'])
             # cuello = st.selectbox('Cervix', ['Open', 'Halfway', 'Closed'])
             st.session_state.button_ok = st.form_submit_button("Submit")
         
@@ -52,6 +52,7 @@ def main():
         one_more_row = len(st.session_state.df.index)
         st.session_state.df.loc[one_more_row, 'Fecha'] = date
         st.session_state.df.loc[one_more_row, 'Temperatura']= temp
+        st.session_state.df.loc[one_more_row, 'Flujo']= flux
         st.session_state.df.to_excel(f'./data/{st.session_state.name}_ciclo'+str(number)+'.xlsx', index = None)
 
         

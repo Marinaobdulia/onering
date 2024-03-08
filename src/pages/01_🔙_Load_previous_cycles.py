@@ -12,16 +12,17 @@ st.markdown('<br>', unsafe_allow_html=True)
 
 # list of cycles
 files_list = get_available_files('./data/', f'{st.session_state.name}_ciclo')
+files_dict = {file.split('_')[1].replace('.xlsx', ''): file for file in files_list}
 
 if len(files_list)==0:
     st.warning("Oops! It seems you haven't register any cycle, please add one on the main page")
     st.stop()
 
 # dropdown with cycle name
-file_chosen = st.selectbox('Choose one cycle:', files_list)
+file_chosen = st.selectbox('Choose one cycle:', files_dict.keys())
 
 # show table and graph
-df = pd.read_excel(file_chosen)
+df = pd.read_excel(files_dict[file_chosen])
 
 df = find_sintho(df)
 
