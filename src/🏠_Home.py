@@ -29,8 +29,10 @@ def main():
             #     st.checkbox('Illness')
             # with col3:
             #     st.checkbox('Different time')
-            flux = st.selectbox('Flux', ['F', 'f'])
-            # cuello = st.selectbox('Cervix', ['Open', 'Halfway', 'Closed'])
+            flux = st.selectbox('Flux', ['','F', 'f'])
+            # cuello1 = st.selectbox('Cervix opening', ['Open', 'Halfway', 'Closed'])
+            # cuello2 = st.selectbox('Cervix height', ['Up', 'Halfway', 'Down'])
+            # cuello3 = st.selectbox('Cervix touch', ['Soft', 'Hard'])
             st.session_state.button_ok = st.form_submit_button("Submit")
         
             # load data
