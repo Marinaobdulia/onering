@@ -20,7 +20,7 @@ def visualize_cycle(df):
     st.info(f'Actualmente estás {dict_phases[current_phase]}')
 
 
-    tab1, tab2 = st.tabs(["Graph", "Table"])
+    tab1, tab2 = st.tabs(["Gráfica", "Tabla"])
 
     with tab1:
         st.altair_chart(chart, use_container_width=True)

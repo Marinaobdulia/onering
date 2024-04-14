@@ -3,8 +3,8 @@ from utils.data_mangement import get_available_files
 from utils.cycle_visualization import visualize_cycle
 
 
-st.set_page_config(page_title = 'Load previous cycles', page_icon = '🔙')
-st.markdown('<h1 style="color: ; font-weigh: 400;"> Load previous cycles <h/1>', unsafe_allow_html= True)
+st.set_page_config(page_title = 'Ciclos anteriores', page_icon = '🔙')
+st.markdown('<h1 style="color: ; font-weigh: 400;"> Ciclos anteriores  <h/1>', unsafe_allow_html= True)
 st.markdown('<hr style = "margin: 0;">', unsafe_allow_html=True)
 st.markdown('<br>', unsafe_allow_html=True)
 
