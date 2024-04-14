@@ -10,7 +10,7 @@ st.markdown('<br>', unsafe_allow_html=True)
 
 # list of cycles
 files_list = get_available_files('./data/', f'{st.session_state.name}_ciclo')
-files_list = files_list[0:-2]
+files_list = files_list[0:-1]
 files_dict = {file.split('_')[1].replace('.xlsx', ''): file for file in files_list}
 
 if len(files_list)==0:
