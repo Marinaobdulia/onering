@@ -11,13 +11,25 @@ import datetime
 # st.set_page_config(page_title = 'Home', page_icon = '🏠')
 
 def main():
-
     # initialise values
     if 'button_ok' not in st.session_state:
         st.session_state.button_ok = False
+        st.session_state.added_today_data = False
+       
+    # load data
+    most_recent, number = get_most_recent_file('./data/', f'{st.session_state.name}_ciclo')
 
-    with st.sidebar:
-        # ask for today's info
+    if most_recent != None:
+        st.session_state.df = pd.read_excel(most_recent)
+        st.session_state.df['Fecha'] = pd.to_datetime(st.session_state.df['Fecha']).dt.date
+        if st.session_state.df.Fecha.iloc[-1] == datetime.date.today():
+            st.session_state.added_today_data = True
+    else:
+        st.warning("Oops! It seems you haven't register any cycle, please add one")
+        st.session_state.added_today_data = False
+        st.stop()
+
+    if st.session_state.added_today_data == False:
         with st.form('add info'):
             new_cycle = st.checkbox('New cycle')
             date = st.date_input("Register date", datetime.date.today())
@@ -34,16 +46,7 @@ def main():
             # cuello2 = st.selectbox('Cervix height', ['Up', 'Halfway', 'Down'])
             # cuello3 = st.selectbox('Cervix touch', ['Soft', 'Hard'])
             st.session_state.button_ok = st.form_submit_button("Submit")
-        
-            # load data
-    most_recent, number = get_most_recent_file('./data/', f'{st.session_state.name}_ciclo')
 
-    if most_recent != None:
-        st.session_state.df = pd.read_excel(most_recent)
-    else:
-        st.warning("Oops! It seems you haven't register any cycle, please add one with the menu on the left")
-        st.stop()
-        
     if st.session_state.button_ok:
         st.write(temp)
         if new_cycle:

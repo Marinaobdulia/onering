@@ -84,8 +84,8 @@ def find_sintho(df, dec_above=0.1):
 
     return df
 
-dict_phases = {'period': 'on your period',
-               'follicular': 'on the follicular phase',
-               'ovulating': 'ovulating or have just ovulated',
-               'luteal': 'on the luteal phase',
-               'undefined': 'on an undefined phase, please add more data'}
+dict_phases = {'periodo': 'en tu periodo',
+               'follicular': 'en la fase folicular',
+               'ovulatoria': 'ovulando o acabas de ovular',
+               'luteal': 'en la fase lútea',
+               'indefinida': 'en una fase indefinida. Por favor, añade más datos.'}
