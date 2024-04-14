@@ -22,32 +22,33 @@ def main():
         if st.session_state.df.Fecha.iloc[-1] == datetime.date.today():
             st.session_state.added_today_data = True
     else:
-        st.warning("Ups! Parece que no has registrado ningún ciclo, por favor añade uno.")
+        st.warning("Ups! Parece que no has registrado ningún ciclo. Por favor, añádelo.")
         st.session_state.added_today_data = False
         st.stop()
 
     if st.session_state.added_today_data == False:
-        with st.form('add info'):
-            new_cycle = st.checkbox('New cycle')
-            date = st.date_input("Register date", datetime.date.today())
-            temp = st.number_input('Temperature', 35.5, 42.00, value = 36.00, step = 0.05)
+        cola, colb, colc = st.columns(3)
+        with colb.form('add info'):
+            new_cycle = st.checkbox('Inicio de ciclo')
+            date = st.date_input("Fecha del registro", datetime.date.today())
+            temp = st.number_input('Temperatura', 35.5, 42.00, value = 36.00, step = 0.05)
             # col1, col2, col3 = st.columns(3)
             # with col1:
             #     st.checkbox('Alcohol')
             # with col2:
-            #     st.checkbox('Illness')
+            #     st.checkbox('Enfermedad')
             # with col3:
-            #     st.checkbox('Different time')
-            flux = st.selectbox('Flux', ['','F', 'f', 'S'])
-            # cuello1 = st.selectbox('Cervix opening', ['Open', 'Halfway', 'Closed'])
-            # cuello2 = st.selectbox('Cervix height', ['Up', 'Halfway', 'Down'])
-            # cuello3 = st.selectbox('Cervix touch', ['Soft', 'Hard'])
-            st.session_state.button_ok = st.form_submit_button("Submit")
+            #     st.checkbox('Hora diferente')
+            flux = st.selectbox('Flujo', ['','F', 'f', 'S'])
+            # cuello1 = st.selectbox('Apertura del cuello', ['Abierto', 'Semi-abierto', 'Cerrado'])
+            # cuello2 = st.selectbox('Altura del cuello', ['Alto', 'Medio', 'Bajo'])
+            # cuello3 = st.selectbox('Tacto del cuello', ['Suave', 'Firme'])
+            st.session_state.button_ok = st.form_submit_button("✅ Guardar")
 
     if st.session_state.button_ok:
         st.write(temp)
         if new_cycle:
-            st.write('Creating excel for new cycle')
+            st.write('Creando un excel para un nuevo ciclo')
             st.session_state.df = pd.DataFrame(columns = ['Fecha', 'Temperatura'])
             number = int(number)+1
 
