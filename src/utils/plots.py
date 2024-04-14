@@ -2,8 +2,10 @@ import altair as alt
 import pandas as pd
 
 def plot_sintho(df):
+
     df['Fecha'] = pd.to_datetime(df['Fecha']).dt.date
     df['Fecha2'] = df['Fecha'].shift(1)
+
 
     # Calculate the start_date and end_date to include at least 28 days
     min_days = min(28, len(df))  # Ensure at least 28 days
@@ -14,7 +16,7 @@ def plot_sintho(df):
     else:
         start_date = df['Fecha'].min()
         end_date = df['Fecha'].max()
-    domain = [start_date, end_date]
+    domain = list(pd.to_datetime([start_date, end_date]).astype(int) / 10 ** 6)
 
 
 

@@ -19,7 +19,7 @@ if most_recent != None:
     st.session_state.df['Fecha'] = pd.to_datetime(st.session_state.df['Fecha']).dt.date
     if st.session_state.df.Fecha.iloc[-1] == datetime.date.today():
         st.warning("Recuerda cargar los datos de hoy")
-    visualize_cycle(st.session_state.df)
+    visualize_cycle(st.session_state.df, show_phase=True)
 else:
     st.warning("Ups! Parece que no has registrado ningún ciclo, por favor añade uno.")
     st.session_state.added_today_data = False

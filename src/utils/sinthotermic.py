@@ -60,17 +60,17 @@ def confirm_ovulation_flux(df):# Find last 'F' index
 
 def find_phase(last_day):
     if last_day.Flujo == 'S':
-        current_phase = 'period'
+        current_phase = 'periodo'
     elif last_day.higher_baseline == False and last_day.ovulation_confirmed == True:
-        current_phase = 'period'
+        current_phase = 'periodo'
     elif last_day.Flujo == 'f' or last_day.Flujo == 'F' or last_day.higher_baseline == False:
-        current_phase = 'follicular'
+        current_phase = 'folicular'
     elif last_day.higher_baseline == True and last_day.ovulation_confirmed == False:
-        current_phase = 'ovulating'
+        current_phase = 'ovulatoria'
     elif last_day.ovulation_confirmed == True:
-        current_phase = 'luteal'
+        current_phase = 'lutea'
     else:
-        current_phase = 'undefined'
+        current_phase = 'indefinida'
     return current_phase
 
 def find_sintho(df, dec_above=0.1):
@@ -87,5 +87,5 @@ def find_sintho(df, dec_above=0.1):
 dict_phases = {'periodo': 'en tu periodo',
                'follicular': 'en la fase folicular',
                'ovulatoria': 'ovulando o acabas de ovular',
-               'luteal': 'en la fase lútea',
+               'lutea': 'en la fase lútea',
                'indefinida': 'en una fase indefinida. Por favor, añade más datos.'}

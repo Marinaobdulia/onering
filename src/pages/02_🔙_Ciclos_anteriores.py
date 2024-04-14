@@ -1,6 +1,7 @@
 import streamlit as st
 from utils.data_mangement import get_available_files
 from utils.cycle_visualization import visualize_cycle
+import pandas as pd
 
 
 st.set_page_config(page_title = 'Ciclos anteriores', page_icon = '🔙')
@@ -19,4 +20,7 @@ if len(files_list)==0:
 # dropdown with cycle name
 file_chosen = st.selectbox('Elige un ciclo:', files_dict.keys())
 
-visualize_cycle(files_dict[file_chosen])
+st.session_state.df = pd.read_excel(files_dict[file_chosen])
+st.session_state.df['Fecha'] = pd.to_datetime(st.session_state.df['Fecha']).dt.date
+
+visualize_cycle(st.session_state.df)

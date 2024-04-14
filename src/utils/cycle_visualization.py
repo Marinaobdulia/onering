@@ -3,7 +3,7 @@ from utils.plots import plot_sintho
 from utils.sinthotermic import find_sintho
 from utils.sinthotermic import dict_phases
 
-def visualize_cycle(df):
+def visualize_cycle(df, show_phase = False):
     strict = st.checkbox('Aplicar algoritmo estricto')
 
     if strict:
@@ -16,8 +16,9 @@ def visualize_cycle(df):
     # after loading today's data, show graph
     chart = plot_sintho(df)
 
-    current_phase = st.session_state.df['phase'].iloc[-1]
-    st.info(f'Actualmente estás {dict_phases[current_phase]}')
+    if show_phase:
+        current_phase = st.session_state.df['phase'].iloc[-1]
+        st.info(f'Actualmente estás {dict_phases[current_phase]}')
 
 
     tab1, tab2 = st.tabs(["Gráfica", "Tabla"])
