@@ -14,8 +14,8 @@ if 'authentication_status' not in st.session_state:
 else:
     # list of cycles
     files_list = get_available_files('./data/', f'{st.session_state.name}_ciclo')
-    files_list.sort(lambda x: x.split('_')[1], reverse=True)
-    files_list = files_list[1::]
+    files_list.sort()
+    files_list = files_list[0:-1]
     files_dict = {file.split('_')[1].replace('.xlsx', ''): file for file in files_list}
 
     if len(files_list)==0:
