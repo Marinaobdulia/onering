@@ -74,15 +74,15 @@ authenticator = stauth.Authenticate(
 )
 
 # login
-st.session_state.name, authentication_status, username = authenticator.login('main')
+st.session_state.name, st.session_state.authentication_status, username = authenticator.login('main')
 
-if authentication_status:
+if st.session_state.authentication_status:
     # authenticator.logout('Logout', 'main')
     st.markdown('<h1 style="color: ; font-weigh: 400;"> Registra un nuevo día 🌅 <h/1>', unsafe_allow_html= True)
     st.markdown('<hr style = "margin: 0;">', unsafe_allow_html=True)
     st.markdown('<br>', unsafe_allow_html=True)
     main()
-elif authentication_status == False:
+elif st.session_state.authentication_status == False:
     st.error('Usuario/contraseña incorrectos')
-elif authentication_status == None:
+elif st.session_state.authentication_status == None:
     st.warning('Por favor, introduce tu usuario y contraseña')
