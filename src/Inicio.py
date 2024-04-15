@@ -77,6 +77,9 @@ col_1, col_2, col_3, col_4, col_5 = st.columns(5)
 with col_5:
     new_user = st.button('🆕 Registrar nuevo usuario')
 
+with col_1:
+    st.write('holaaa')
+
 # register new user_option
 if new_user:
     try:
