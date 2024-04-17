@@ -11,6 +11,8 @@ st.markdown('<br>', unsafe_allow_html=True)
 
 if 'authentication_status' not in st.session_state:
     st.warning('Por favor, introduce tu usuario y contraseña')
+elif st.session_state.authentication_status == None:
+        st.warning('Por favor, introduce tu usuario y contraseña')
 else:
     # list of cycles
     files_list = get_available_files('./data/', f'{st.session_state.name}_ciclo')

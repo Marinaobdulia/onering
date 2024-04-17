@@ -12,6 +12,8 @@ st.markdown('<br>', unsafe_allow_html=True)
 
 if 'authentication_status' not in st.session_state:
     st.warning('Por favor, introduce tu usuario y contraseña')
+elif st.session_state.authentication_status == None:
+        st.warning('Por favor, introduce tu usuario y contraseña')
 else:
     # load data
     most_recent, number = get_most_recent_file('./data/', f'{st.session_state.name}_ciclo')

@@ -78,7 +78,7 @@ authenticator = stauth.Authenticate(
 
 col_1, col_2, col_3, col_4, col_5 = st.columns(5)
 with col_5:
-    new_user = st.button('🆕 Registrar nuevo usuario')
+    new_user = st.button('🆕 Nueva usuaria')
 
 if new_user:
     st.session_state.new_user = True
@@ -99,7 +99,7 @@ if st.session_state.new_user:
         with open('./config.yaml', 'w') as file:
             yaml.dump(config, file, default_flow_style=False)
         if email_of_registered_user:
-            st.success('Usario registrado correctamente')
+            st.success('Usaria registrado correctamente')
     except Exception as e:
         st.error(e)
 
