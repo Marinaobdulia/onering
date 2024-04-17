@@ -5,6 +5,15 @@ st.markdown('<h1 style="color: ; font-weigh: 400;"> Cómo funciona <h/1>', unsaf
 st.markdown('<hr style = "margin: 0;">', unsafe_allow_html=True)
 st.markdown('<br>', unsafe_allow_html=True)
 
+st.write("""Onering se basa en tres indicadores para medir la fecundidad: 
+la temperatura basal, el flujo cervical y la posición del cuello del útero. 
+Estos tres elementos proporcionan información valiosa sobre el ciclo menstrual 
+de una mujer y pueden ayudar a identificar los días más fértiles Al monitorear 
+estos indicadores de manera regular y precisa, los usuarios de Onering pueden 
+tomar decisiones informadas sobre su salud reproductiva.
+         
+Te explicamos con mayor detalle cada uno de ellos:""")
+
 tab1, tab2, tab3 = st.tabs(["Temperatura", "Flujo", "Cérvix"])
 
 with tab1:
@@ -45,8 +54,7 @@ firme y cerrado para proteger el útero de infecciones. Durante la ovulación,
 el cuello del útero se ablanda, se eleva y se abre ligeramente para permitir que los 
 espermatozoides entren en el útero y se encuentren con un óvulo para la fertilización.
 
-Observar los cambios en la posición, textura y apertura del cuello del útero puede 
-
+Observar los cambios en la posición, textura y apertura del cuello del útero puede
 ser útil para determinar el momento más fértil del ciclo menstrual. Sin embargo, 
 es importante tener en cuenta que esta técnica requiere práctica y puede no ser 
 tan precisa como otras formas de seguimiento de la fertilidad.""")

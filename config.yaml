@@ -1,12 +1,14 @@
-credentials:
-  usernames:
-    teto:
-      name: Marina
-      password: $2b$12$dk4odyG5RaskzWjPu8tTM.jtyEhzWa6ebWb49E5YIAm0hyhzpGPNq
-    test2:
-      name: test1
-      password: $2b$12$dk4odyG5RaskzWjPu8tTM.jtyEhzWa6ebWb49E5YIAm0hyhzpGPNq
 cookie:
   expiry_days: 30
-  key: random_signature_key # Must be string
+  key: random_signature_key
   name: random_cookie_name
+credentials:
+  usernames:
+    test2:
+      logged_in: false
+      name: test1
+      password: $2b$12$dk4odyG5RaskzWjPu8tTM.jtyEhzWa6ebWb49E5YIAm0hyhzpGPNq
+    teto:
+      logged_in: false
+      name: Marina
+      password: $2b$12$dk4odyG5RaskzWjPu8tTM.jtyEhzWa6ebWb49E5YIAm0hyhzpGPNq

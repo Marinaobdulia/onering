@@ -65,6 +65,9 @@ st.set_page_config(page_title = 'Inicio', page_icon = '🏠')
 with open('./config.yaml') as file:
     config = yaml.load(file, Loader=SafeLoader)
 
+if 'new_user' not in st.session_state:
+    st.session_state.new_user = False
+
 
 authenticator = stauth.Authenticate(
     config['credentials'],
@@ -77,33 +80,42 @@ col_1, col_2, col_3, col_4, col_5 = st.columns(5)
 with col_5:
     new_user = st.button('🆕 Registrar nuevo usuario')
 
-with col_1:
-    st.write('holaaa')
+if new_user:
+    st.session_state.new_user = True
+    st.experimental_rerun()
+
 
 # register new user_option
-if new_user:
+if st.session_state.new_user:
+    with col_1:
+        back = st.button('Volver')
+
+    if back:
+        st.session_state.new_user = False
+        st.experimental_rerun()
+
     try:
-        email_of_registered_user, username_of_registered_user, name_of_registered_user = authenticator.register_user(pre_authorization=False)
+        email_of_registered_user, username_of_registered_user, name_of_registered_user = authenticator.register_user(preauthorization=False)
+        with open('./config.yaml', 'w') as file:
+            yaml.dump(config, file, default_flow_style=False)
         if email_of_registered_user:
             st.success('Usario registrado correctamente')
-
-        with open('../config.yaml', 'w') as file:
-            yaml.dump(config, file, default_flow_style=False)
     except Exception as e:
         st.error(e)
 
-# login
-st.session_state.name, st.session_state.authentication_status, username = authenticator.login('main')
+else:
+    # login
+    st.session_state.name, st.session_state.authentication_status, username = authenticator.login('main')
 
 
 
-if st.session_state.authentication_status:
-    # authenticator.logout('Logout', 'main')
-    st.markdown('<h1 style="color: ; font-weigh: 400;"> Registra un nuevo día 🌅 <h/1>', unsafe_allow_html= True)
-    st.markdown('<hr style = "margin: 0;">', unsafe_allow_html=True)
-    st.markdown('<br>', unsafe_allow_html=True)
-    main()
-elif st.session_state.authentication_status == False:
-    st.error('Usuario/contraseña incorrectos')
-elif st.session_state.authentication_status == None:
-    st.warning('Por favor, introduce tu usuario y contraseña')
+    if st.session_state.authentication_status:
+        # authenticator.logout('Logout', 'main')
+        st.markdown('<h1 style="color: ; font-weigh: 400;"> Registra un nuevo día 🌅 <h/1>', unsafe_allow_html= True)
+        st.markdown('<hr style = "margin: 0;">', unsafe_allow_html=True)
+        st.markdown('<br>', unsafe_allow_html=True)
+        main()
+    elif st.session_state.authentication_status == False:
+        st.error('Usuario/contraseña incorrectos')
+    elif st.session_state.authentication_status == None:
+        st.warning('Por favor, introduce tu usuario y contraseña')
