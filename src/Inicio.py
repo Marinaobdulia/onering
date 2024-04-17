@@ -24,14 +24,13 @@ def main():
     else:
         st.warning("Ups! Parece que no has registrado ningún ciclo. Por favor, añádelo.")
         st.session_state.added_today_data = False
-        st.stop()
 
     if st.session_state.added_today_data == False:
         cola, colb, colc = st.columns(3)
         with colb.form('add info'):
             new_cycle = st.checkbox('Inicio de ciclo')
             date = st.date_input("Fecha del registro", datetime.date.today())
-            temp = st.number_input('Temperatura', 35.5, 42.00, value = 36.00, step = 0.05)
+            temp = st.number_input('Temperatura', 35, 42.00, value = 36.00, step = 0.05)
             # col1, col2, col3 = st.columns(3)
             # with col1:
             #     st.checkbox('Alcohol')
@@ -40,6 +39,7 @@ def main():
             # with col3:
             #     st.checkbox('Hora diferente')
             flux = st.selectbox('Flujo', ['','F', 'f', 'S'])
+            st.caption("S - Sangrado; f - poco líquido; F - muy líquido")
             # cuello1 = st.selectbox('Apertura del cuello', ['Abierto', 'Semi-abierto', 'Cerrado'])
             # cuello2 = st.selectbox('Altura del cuello', ['Alto', 'Medio', 'Bajo'])
             # cuello3 = st.selectbox('Tacto del cuello', ['Suave', 'Firme'])
