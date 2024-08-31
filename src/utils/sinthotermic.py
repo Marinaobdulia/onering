@@ -25,7 +25,6 @@ def confirm_ovulation_temp(df, dec_above):
     df = find_baseline(df)
     # Check the next three temperatures are higher than that value
     df['higher_baseline']=df.apply(lambda x: ((x.Temperatura >= x.baseline+dec_above)), axis=1)
-
     df['days_higher_than_baseline'] = df['higher_baseline'].rolling(window=4, min_periods = 1).sum()
 
     # confirm ovulation

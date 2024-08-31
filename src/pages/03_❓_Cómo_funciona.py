@@ -5,12 +5,11 @@ st.markdown('<h1 style="color: ; font-weigh: 400;"> Cómo funciona <h/1>', unsaf
 st.markdown('<hr style = "margin: 0;">', unsafe_allow_html=True)
 st.markdown('<br>', unsafe_allow_html=True)
 
-st.write("""Onering se basa en tres indicadores para medir la fecundidad: 
-la temperatura basal, el flujo cervical y la posición del cuello del útero. 
+st.write("""Onering se basa en tres indicadores para estimar en qué fase del ciclo te encuentras: 
+la temperatura basal, el flujo cervical y la posición del cuello del útero.
+         
 Estos tres elementos proporcionan información valiosa sobre el ciclo menstrual 
-de una mujer y pueden ayudar a identificar los días más fértiles Al monitorear 
-estos indicadores de manera regular y precisa, los usuarios de Onering pueden 
-tomar decisiones informadas sobre su salud reproductiva.
+de una mujer y pueden ayudar a identificar los días más fértiles.
          
 Te explicamos con mayor detalle cada uno de ellos:""")
 
@@ -20,15 +19,15 @@ with tab1:
     st.write("""La temperatura basal es la temperatura del cuerpo en reposo, 
 medida en el momento en que te despiertas por la mañana, 
 antes de levantarte de la cama o de realizar cualquier actividad física. 
-Se mide con un termómetro especial que puede detectar cambios muy pequeños en la temperatura.
+Se mide con un [termómetro capaz de indicar dos decimales](https://www.amazon.es/Domotherm-Rapid-Term%C3%B3metro-decimales-flexible/dp/B0014II7G6?th=1).
 
 En el ciclo menstrual, la temperatura basal puede ayudar a detectar la ovulación. 
 Antes de la ovulación, la temperatura basal suele ser más baja, y después de la ovulación,
 tiende a subir ligeramente y permanecer elevada hasta el próximo periodo menstrual. 
-Este aumento se debe a la liberación de la hormona progesterona después de la ovulación.
+Este aumento se debe a la liberación de la hormona **progesterona** después de la ovulación.
 
-Es importante medir la temperatura basal a la misma hora cada mañana y bajo condiciones consistentes,
-como antes de levantarse de la cama o de hablar, para obtener lecturas precisas. """)
+Es importante medir la temperatura basal a la **misma hora cada mañana** y bajo condiciones consistentes,
+como **antes de levantarse de la cama o de hablar**, para obtener lecturas precisas. """)
 with tab2:
     st.write("""El flujo cervical es una secreción vaginal natural que cambia en cantidad 
 y consistencia a lo largo del ciclo menstrual de una mujer. 

@@ -30,7 +30,7 @@ def main():
         with colb.form('add info'):
             new_cycle = st.checkbox('Inicio de ciclo')
             date = st.date_input("Fecha del registro", datetime.date.today())
-            temp = st.number_input('Temperatura', 35, 42.00, value = 36.00, step = 0.05)
+            temp = st.number_input('Temperatura', 35.00, 42.00, value = 36.00, step = 0.05)
             # col1, col2, col3 = st.columns(3)
             # with col1:
             #     st.checkbox('Alcohol')
@@ -59,63 +59,67 @@ def main():
         st.session_state.df.to_excel(f'./data/{st.session_state.name}_ciclo'+str(number)+'.xlsx', index = None)
 
 
-st.set_page_config(page_title = 'Inicio', page_icon = '🏠')
+def authentication():
+    with open('./config.yaml') as file:
+        config = yaml.load(file, Loader=SafeLoader)
 
-
-with open('./config.yaml') as file:
-    config = yaml.load(file, Loader=SafeLoader)
-
-if 'new_user' not in st.session_state:
-    st.session_state.new_user = False
-
-
-authenticator = stauth.Authenticate(
-    config['credentials'],
-    config['cookie']['name'],
-    config['cookie']['key'],
-    config['cookie']['expiry_days'],
-)
-
-col_1, col_2, col_3, col_4, col_5 = st.columns(5)
-with col_5:
-    new_user = st.button('🆕 Nueva usuaria')
-
-if new_user:
-    st.session_state.new_user = True
-    st.experimental_rerun()
-
-
-# register new user_option
-if st.session_state.new_user:
-    with col_1:
-        back = st.button('Volver')
-
-    if back:
+    if 'new_user' not in st.session_state:
         st.session_state.new_user = False
-        st.experimental_rerun()
-
-    try:
-        email_of_registered_user, username_of_registered_user, name_of_registered_user = authenticator.register_user(preauthorization=False)
-        with open('./config.yaml', 'w') as file:
-            yaml.dump(config, file, default_flow_style=False)
-        if email_of_registered_user:
-            st.success('Usaria registrado correctamente')
-    except Exception as e:
-        st.error(e)
-
-else:
-    # login
-    st.session_state.name, st.session_state.authentication_status, username = authenticator.login('main')
 
 
+    authenticator = stauth.Authenticate(
+        config['credentials'],
+        config['cookie']['name'],
+        config['cookie']['key'],
+        config['cookie']['expiry_days'],
+    )
 
-    if st.session_state.authentication_status:
-        # authenticator.logout('Logout', 'main')
-        st.markdown('<h1 style="color: ; font-weigh: 400;"> Registra un nuevo día 🌅 <h/1>', unsafe_allow_html= True)
-        st.markdown('<hr style = "margin: 0;">', unsafe_allow_html=True)
-        st.markdown('<br>', unsafe_allow_html=True)
-        main()
-    elif st.session_state.authentication_status == False:
-        st.error('Usuario/contraseña incorrectos')
-    elif st.session_state.authentication_status == None:
-        st.warning('Por favor, introduce tu usuario y contraseña')
+    col_1, col_2, col_3, col_4, col_5 = st.columns(5)
+    with col_5:
+        if st.session_state.new_user == False and st.session_state.authentication_status is None:
+            new_user = st.button('🆕 Nueva usuaria')
+
+            if new_user:
+                st.session_state.new_user = True
+                st.experimental_rerun()
+
+
+    # register new user_option
+    if st.session_state.new_user:
+        with col_1:
+            back = st.button('Volver')
+
+        if back:
+            st.session_state.new_user = False
+            st.experimental_rerun()
+
+        try:
+            email_of_registered_user, username_of_registered_user, name_of_registered_user = authenticator.register_user(preauthorization=False)
+            with open('./config.yaml', 'w') as file:
+                yaml.dump(config, file, default_flow_style=False)
+            if email_of_registered_user:
+                st.success('Usaria registrado correctamente')
+        except Exception as e:
+            st.error(e)
+
+    else:
+        # login
+        if st.session_state.authentication_status is None:
+            st.session_state.name, st.session_state.authentication_status, username = authenticator.login('main')
+            if st.session_state.authentication_status:
+                st.experimental_rerun()
+
+        if st.session_state.authentication_status:
+            # authenticator.logout('Logout', 'main')
+            st.markdown('<h1 style="color: ; font-weigh: 400;"> Registra un nuevo día 🌅 <h/1>', unsafe_allow_html= True)
+            st.markdown('<hr style = "margin: 0;">', unsafe_allow_html=True)
+            st.markdown('<br>', unsafe_allow_html=True)
+            main()
+        elif st.session_state.authentication_status == False:
+            st.error('Usuario/contraseña incorrectos')
+        elif st.session_state.authentication_status == None:
+            st.warning('Por favor, introduce tu usuario y contraseña')
+
+
+st.set_page_config(page_title = 'Inicio', page_icon = '🏠')
+authentication()
